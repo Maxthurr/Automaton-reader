@@ -1,4 +1,4 @@
-# --- Structure données automate --- 
+# --- Structure données automate --- #
 automate = {
     0: {
         'a': [1, 2],
@@ -17,22 +17,19 @@ automate = {
 def automateCreator(fileLocation):
     with open(fileLocation) as f:
         lines = f.readlines()
-        finalLine = lines[0]
+        finalStates = lines[0]
         del lines[0]
         # Create all the keys and empty lists needed (example: {0: {'a': []}})
         createdAutomate = {int(line.split()[0]): {lineA.split()[1]: [] for lineA in lines if line.split()[0] == lineA[0]} for line in lines}
         for line in lines:
             data = line.split()
-            try:
-                createdAutomate[int(data[0])][data[1]].append(int(data[2]))
-            except KeyError:
-                continue
-        createdAutomate['finalStates'] = [int(elem) for elem in finalLine.split()]
+            createdAutomate[int(data[0])][data[1]].append(int(data[2]))
+        createdAutomate['finalStates'] = [int(elem) for elem in finalStates.split()]
         return createdAutomate
             
 AND = automateCreator("automate.txt")
 
 # TODO Wordcheking function + tests
-def checkWord(word, automate):
-    state = 0
-    for letter in word:
+# def checkWord(word, automate):
+#     state = 0
+#     for letter in word:
