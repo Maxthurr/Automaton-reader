@@ -14,7 +14,7 @@ automate = {
 }
 
 
-def automateCreator(fileLocation):
+def automateCreator(fileLocation: str) -> dict:
     with open(fileLocation) as f:
         lines = f.readlines()
         finalStates = lines[0]
@@ -27,35 +27,34 @@ def automateCreator(fileLocation):
         createdAutomate['finalStates'] = [int(elem) for elem in finalStates.split()]
         return createdAutomate
             
-AND = automateCreator("automate.txt")
+AND = automateCreator("automate2.txt")
 
-# TODO Wordcheking function + tests
-##! Jpense que jme complique la vie mais j'ai commencé par ca meme si c'est pas beau
-def checkWord(word, automate):
-    statesToCheck = [0]
-    goodLetters = 0
+def checkWord(word: str, automate: dict ) -> bool:
+    if word == '':
+        return False
+    statesToCheck = [[0]]
     for letter in word:
-        print(statesToCheck, letter)
-        wrongStates = 0
-        for state in statesToCheck  :
-            print(letter, state, wrongStates)
-            try: 
-                automate[state][letter]
-            except KeyError:
-                wrongStates += 1
-                print('error', wrongStates)
-                if wrongStates == len(statesToCheck):
-                    return False
-                continue
-            else:
-                statesToCheck = automate[state][letter]
-                goodLetters += 1
-                print(statesToCheck)
-            
-    print(statesToCheck, automate['finalStates'])
-    for state in statesToCheck:
-        if state in automate['finalStates'] and goodLetters == len(word):
+        statesToCheck = checkPaths(letter, automate, statesToCheck)
+    for path in statesToCheck:
+        if path[-1] in automate['finalStates']:
             return True
     return False
 
-print(checkWord('abb', AND))
+
+def checkPaths(letter: str, automate: dict, statesList: list) -> list:
+    print(statesList)
+    toReturn = []
+    for i in range(len(statesList)):
+        print(toReturn)
+        print(letter, statesList[i][-1])
+        try:
+            automate[statesList[i][-1]][letter]
+        except KeyError:
+            continue
+        else:            
+            for elem in automate[statesList[i][-1]][letter]:
+                toReturn.append(statesList[i] + [elem])
+                print(toReturn)
+    return toReturn
+
+print(checkWord('cdlyzyzyzyzyzyz', AND))
