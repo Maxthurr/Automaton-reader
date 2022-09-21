@@ -118,5 +118,5 @@ print("Complex automaton with non valid word: ", checkWord("cdc", complexNDA)) #
 print("Complex automaton with non valid letter", checkWord('q', complexNDA), end="\n") # -> False
 
 # Test for empty string and wrong type for word (not depending on Automaton)
-print("Test with empty string: ", checkWord('', simpleNDA), end="\n") # -> False
+print("Test with empty string: ", checkWord('', simpleNDA)) # -> False
 print("Test with integer instead of string for the word", checkWord(4, simpleNDA)) # -> False
