@@ -55,7 +55,7 @@ def automatonCreator(filePath: str) -> dict:
 simpleNDA = automatonCreator("automaton.txt")
 complexNDA = automatonCreator("automaton2.txt")
 
-def pathsRetriever(letter: str, automaton: dict, statesList: list) -> list:
+def pathsRetriever(letter: str, automaton: dict, statesList: set) -> list:
     """ 
     Generates the list of all the possible paths
 
@@ -68,14 +68,14 @@ def pathsRetriever(letter: str, automaton: dict, statesList: list) -> list:
         paths (list): list of all possible paths
     """
 
-    paths = []
-    for i in range(len(statesList)):
+    paths = set([])
+    for elem in statesList:
         try:
-            automaton[statesList[i][-1]][letter]
+            automaton[elem][letter]
         except KeyError:
             continue         
-        for state in automaton[statesList[i][-1]][letter]:
-            paths.append(statesList[i] + [state])
+        for state in automaton[elem][letter]:
+            paths.add(state)
     return paths
 
 
@@ -96,15 +96,13 @@ def checkWord(word: str, automaton: dict ) -> bool:
         return False
 
     # The first step of the path is always 0
-    possibleStates = [[0]]
+    possibleStates = {0}
     for letter in word:
-        print(possibleStates)
         possibleStates = pathsRetriever(letter, automaton, possibleStates)
 
-    print(possibleStates)
     for path in possibleStates:
         # if at least one of the paths leads to one of the final states
-        if path[-1] in automaton["finalStates"]:
+        if path in automaton["finalStates"]:
             return True
     return False
 
