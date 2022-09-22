@@ -98,8 +98,10 @@ def checkWord(word: str, automaton: dict ) -> bool:
     # The first step of the path is always 0
     possibleStates = [[0]]
     for letter in word:
+        print(possibleStates)
         possibleStates = pathsRetriever(letter, automaton, possibleStates)
 
+    print(possibleStates)
     for path in possibleStates:
         # if at least one of the paths leads to one of the final states
         if path[-1] in automaton["finalStates"]:
@@ -109,13 +111,13 @@ def checkWord(word: str, automaton: dict ) -> bool:
 
 # Simple automaton tests
 print("Simple automaton with valid word: ", checkWord("abbadcd", simpleNDA)) # -> True
-print("Simple automaton with non valid word: ", checkWord("ad", simpleNDA)) # -> False
-print("Simple automaton with non valid letters", checkWord("f", simpleNDA), end="\n") # -> False
+print("Simple automaton with non valid word: ", checkWord("ac", simpleNDA)) # -> False
+print("Simple automaton with non valid letters", checkWord("f", simpleNDA), "\n") # -> False
 
 # Complex automaton tests
-print("Complex automaton with valid word: ", checkWord("cdcdakwc", complexNDA)) # -> True
+print("Complex automaton with valid word: ", checkWord("cdccdakwc", complexNDA)) # -> True
 print("Complex automaton with non valid word: ", checkWord("cdc", complexNDA)) # -> False
-print("Complex automaton with non valid letter", checkWord('q', complexNDA), end="\n") # -> False
+print("Complex automaton with non valid letter", checkWord('q', complexNDA), "\n") # -> False
 
 # Test for empty string and wrong type for word (not depending on Automaton)
 print("Test with empty string: ", checkWord('', simpleNDA)) # -> False
