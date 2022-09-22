@@ -55,28 +55,28 @@ def automatonCreator(filePath: str) -> dict:
 simpleNDA = automatonCreator("automaton.txt")
 complexNDA = automatonCreator("automaton2.txt")
 
-def pathsRetriever(letter: str, automaton: dict, statesList: set) -> list:
+def possibleStatesRetriever(letter: str, automaton: dict, statesSet: set) -> list:
     """ 
-    Generates the list of all the possible paths
+    Generates the set of all the possible states
 
     Args:
         letter (str): letter 
         automaton (dict): self explanatory
-        statesList (list): the current state of the automaton
+        statesList (set): the current possible states of the automaton
 
     Returns:
-        paths (list): list of all possible paths
+        possibleStates (set): set of all possible states
     """
 
-    paths = set([])
-    for elem in statesList:
+    possibleStates = set([])
+    for currentState in statesSet:
         try:
-            automaton[elem][letter]
+            automaton[currentState][letter]
         except KeyError:
             continue         
-        for state in automaton[elem][letter]:
-            paths.add(state)
-    return paths
+        for possibleState in automaton[currentState][letter]:
+            possibleStates.add(possibleState)
+    return possibleStates
 
 
 def checkWord(word: str, automaton: dict ) -> bool:
@@ -98,11 +98,11 @@ def checkWord(word: str, automaton: dict ) -> bool:
     # The first step of the path is always 0
     possibleStates = {0}
     for letter in word:
-        possibleStates = pathsRetriever(letter, automaton, possibleStates)
+        possibleStates = possibleStatesRetriever(letter, automaton, possibleStates)
 
-    for path in possibleStates:
+    for state in possibleStates:
         # if at least one of the paths leads to one of the final states
-        if path in automaton["finalStates"]:
+        if state in automaton["finalStates"]:
             return True
     return False
 
