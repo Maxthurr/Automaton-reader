@@ -18,7 +18,7 @@ automaton = {
     3: {
         'c': [2]
     },
-    'finalStates': [2, 3]
+    "finalStates": [2, 3]
 }
 
 
@@ -68,7 +68,7 @@ def possibleStatesRetriever(letter: str, automaton: dict, statesSet: set) -> lis
         possibleStates (set): set of all possible states
     """
 
-    possibleStates = set([])
+    possibleStates = set()
     for currentState in statesSet:
         try:
             automaton[currentState][letter]
@@ -110,13 +110,13 @@ def checkWord(word: str, automaton: dict ) -> bool:
 # Simple automaton tests
 print("Simple automaton with valid word: ", checkWord("abbadcd", simpleNDA)) # -> True
 print("Simple automaton with non valid word: ", checkWord("ac", simpleNDA)) # -> False
-print("Simple automaton with non valid letters", checkWord("f", simpleNDA), "\n") # -> False
+print("Simple automaton with non valid letter: ", checkWord('af', simpleNDA), "\n") # -> False
 
 # Complex automaton tests
 print("Complex automaton with valid word: ", checkWord("cdccdakwc", complexNDA)) # -> True
 print("Complex automaton with non valid word: ", checkWord("cdc", complexNDA)) # -> False
-print("Complex automaton with non valid letter", checkWord('q', complexNDA), "\n") # -> False
+print("Complex automaton with non valid letter: ", checkWord('q', complexNDA), "\n") # -> False
 
 # Test for empty string and wrong type for word (not depending on Automaton)
 print("Test with empty string: ", checkWord('', simpleNDA)) # -> False
-print("Test with integer instead of string for the word", checkWord(4, simpleNDA)) # -> False
+print("Test with integer instead of string for the word: ", checkWord(4, simpleNDA)) # -> False
